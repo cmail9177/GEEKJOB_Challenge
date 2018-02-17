@@ -1,36 +1,47 @@
 <%-- 
-    Document   : newjsp1
-    Created on : 2018/01/29, 12:55:00
+    Document   : IF
+    Created on : 2018/02/17, 10:10:27
     Author     : guest1Day
 --%>
-
+<%@page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-         
     </head>
-    <body><h2>
-           <%@ page import="java.util.ArrayList" %>
-           <%@ page import="java.util.HashMap" %>
+    <body>
+        <h1><%
            
-        <%
-            String a="あ";
-            String A="い";
-            String aA="A";
-                    
-            int bb=8;  
-            int BB=8;
-            for(int i =1;i <=20;i++){     //10以下の場合繰り返す、繰り返す毎＋１
-                bb=bb*BB;                  //右の結果を左に代入
-                out.println(bb+"<br>");
-            }
-        %>
-      
-        
-        
-        </h2>
+            ArrayList<String> AA = new ArrayList<String>();
+                
+                AA.add("１０");
+                AA.add("１００");
+                AA.add("soeda");
+                AA.add("hayashi");
+                AA.add("-20");
+                AA.add("118");
+                AA.add("END");
+          
+        AA.get(0);
+          AA.get(1);
+            AA.get(2);
+              AA.get(3);
+                AA.get(4);
+                 AA.get(5);
+                  AA.get(6);
+
+                AA.set(2,"33");
+  
+            out.print(AA.get(0));
+            out.print(AA.get(1));
+            out.print(AA.get(2));
+            out.print(AA.get(3));
+            out.print(AA.get(4));
+            out.print(AA.get(5));
+            out.print(AA.get(6));
+
+            %></h1>
     </body>
 </html>

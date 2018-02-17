@@ -1,9 +1,9 @@
 <%-- 
-    Document   : newjsp1
-    Created on : 2018/01/29, 12:55:00
+    Document   : IF
+    Created on : 2018/02/17, 10:10:27
     Author     : guest1Day
 --%>
-
+<%@page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -11,37 +11,31 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
-    <body><h2>
-                <%@ page import="java.util.ArrayList" %>
+    <body>
+        <h1><%
            
-             <%
-           
-            ArrayList<String> ae= new ArrayList<String>();
+            ArrayList<String> AA = new ArrayList<String>();
+                
+                AA.add("１０");
+                AA.add("１００");
+                AA.add("soeda");
+                AA.add("hayashi");
+                AA.add("-20");
+                AA.add("118");
+                AA.add("END");
+                
+            out.print(AA.get(0));
+            out.print(AA.get(1));
+            out.print(AA.get(2));
+            out.print(AA.get(3));
+            out.print(AA.get(4));
+            out.print(AA.get(5));
+            out.print(AA.get(6));
             
-            ae.add("10");
-            ae.add("100");
-            ae.add("soeda");
-            ae.add("hayashi");
-            ae.add("⁻20");
-            ae.add("118");
-            ae.add("END");
-            
-            
-            ae.set(2,"33");
-            
-           
-            out.print(ae.get(0)+"<br>");
-            out.print(ae.get(1)+"<br>");
-            out.print(ae.get(2)+"<br>");
-            out.print(ae.get(3)+"<br>");
-            out.print(ae.get(4)+"<br>");
-            out.print(ae.get(5)+"<br>");
-            out.print(ae.get(6)+"<br>");
-          
-            
-            
-            %>
-        </h2>
-        
+
+
+
+
+            %></h1>
     </body>
 </html>
