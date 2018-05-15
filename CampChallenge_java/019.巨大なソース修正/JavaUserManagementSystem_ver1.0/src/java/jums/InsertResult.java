@@ -2,7 +2,9 @@ package jums;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -28,16 +30,33 @@ public class InsertResult extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        //セッションスタート
-        HttpSession session = request.getSession();
-        
-        try{
+    
+       try{   
+            request.setCharacterEncoding("UTF-8");//セッションに格納する文字コードをUTF-8に変更
+            HttpSession hs = request.getSession();
+            HttpSession session = request.getSession();
+            
+            String accesschk = request.getParameter("ac");
+            
+            if(hs.getAttribute("ac") == null || accesschk ==null){
+                throw new Exception("直リンクでアクセスした可能性があります。");
+            }
+            
             //ユーザー情報に対応したJavaBeansオブジェクトに格納していく
             UserDataDTO userdata = new UserDataDTO();
+            userdata.setUserID(Integer.parseInt((String)session.getAttribute("uID")));
             userdata.setName((String)session.getAttribute("name"));
-            Calendar birthday = Calendar.getInstance();
-            userdata.setBirthday(birthday.getTime());
+ 
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+            String y =(String)session.getAttribute("year");
+            String m =(String)session.getAttribute("month");
+            String d =(String)session.getAttribute("day");
+            
+            
+            Date D = format.parse(y+"-"+m+"-"+d);
+            
+            
+            userdata.setBirthday(D);
             userdata.setType(Integer.parseInt((String)session.getAttribute("type")));
             userdata.setTell((String)session.getAttribute("tell"));
             userdata.setComment((String)session.getAttribute("comment"));
@@ -46,13 +65,13 @@ public class InsertResult extends HttpServlet {
             UserDataDAO .getInstance().insert(userdata);
             
             request.getRequestDispatcher("/insertresult.jsp").forward(request, response);
+            
         }catch(Exception e){
             //データ挿入に失敗したらエラーページにエラー文を渡して表示
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);
-        }
+           }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
