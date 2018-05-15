@@ -1,7 +1,11 @@
 package jums;
 
+import base.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,18 +30,55 @@ public class Update extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+        
+        Connection con = null;
+        PreparedStatement st = null;
+        
         try {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Update</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Update at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
+            
+            request.setCharacterEncoding("UTF-8");
+            String t = request.getParameter("id");
+            int n = Integer.parseInt(t);
+            
+            String sql = "select * from user_t where userID="+n+"";
+            
+            con = DBManager.getConnection();
+            
+            st = con.prepareStatement(sql);
+            
+            ResultSet rs = st.executeQuery();
+            
+            rs.next();
+            UserDataDTO Tdata = new UserDataDTO();
+            
+            Tdata.setUserID(rs.getInt(1));
+            Tdata.setName(rs.getString(2));
+            Tdata.setBirthday(rs.getDate(3));
+            Tdata.setTell(rs.getString(4));
+            Tdata.setType(rs.getInt(5));
+            Tdata.setComment(rs.getString(6));
+            Tdata.setNewDate(rs.getTimestamp(7));
+            
+            
+            
+            
+            
+//            UserDataBeans udb = new UserDataBeans();
+//            udb.UD2DTOMapping(Tdata);
+            
+//            request.setAttribute("Beansのデータ",udb);
+            request.setAttribute("DTOデータ",Tdata);
+            
+            
+          
+            
+            request.getRequestDispatcher("/update.jsp").forward(request, response);
+        }catch(Exception e){
+            request.setAttribute("error", e);
+            request.getRequestDispatcher("/error.jsp").forward(request,response);
+        }
+        
+        finally {
             out.close();
         }
     }

@@ -6,7 +6,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import base.DBManager;
+import javax.servlet.RequestDispatcher;
 /**
  *
  * @author hayashi-s
@@ -27,19 +28,35 @@ public class Delete extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            
+            request.setCharacterEncoding("UTF-8");
+            String t = request.getParameter("id");
+            int n = Integer.parseInt(t);
+            
+            
+            UserDataDTO D = new UserDataDTO();
+            D.setUserID(n);
+            UserDataDTO resultData = UserDataDAO .getInstance().searchByID(D);
+            request.setAttribute("resultData",resultData);
+            
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet Delete</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet Delete at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        } finally {
-            out.close();
+//            out.println("<!DOCTYPE html>");
+//            out.println("<html>");
+//            out.println("<head>");
+//            out.println("<title>Servlet Delete</title>");            
+//            out.println("</head>");
+//            out.println("<body>");
+//            out.println("<h1>Servlet Delete at " + request.getContextPath() + "</h1>");
+//            out.println("</body>");
+//            out.println("</html>");
+            request.getRequestDispatcher("/delete.jsp").forward(request, response);
+//            request.getRequestDispatcher("").forward(request, response);
+          
+        }catch(Exception e){
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
         }
+        
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

@@ -10,6 +10,7 @@ import java.util.Calendar;
  * @author hayashi-s
  */
 public class UserDataBeans implements Serializable{
+    private int UserID;
     private String name;
     private int year;
     private int month;
@@ -19,6 +20,7 @@ public class UserDataBeans implements Serializable{
     private String comment;
     
     public UserDataBeans(){
+        this.UserID= 0;
         this.name = "";
         this.year = 0;
         this.month = 0;
@@ -26,6 +28,18 @@ public class UserDataBeans implements Serializable{
         this.tell = "";
         this.type = 0;
         this.comment= "";
+    }
+    
+    public int getUserID() {
+        return UserID;
+    }
+    public void setUserID(String UserID) {
+        //空文字(未入力)の場合空文字をセット
+        if(UserID.equals("")){
+            this.UserID=0;
+        }else{
+            this.UserID = Integer.parseInt(UserID);
+        }
     }
     
     public String getName() {
@@ -110,6 +124,9 @@ public class UserDataBeans implements Serializable{
     
     public ArrayList<String> chkproperties(){
         ArrayList<String> chkList = new ArrayList<String>();
+        if(this.UserID==0){
+            chkList.add("UserID");
+        }
         if(this.name.equals("")){
             chkList.add("name");
         }
@@ -136,6 +153,7 @@ public class UserDataBeans implements Serializable{
     }
 
     public void UD2DTOMapping(UserDataDTO udd){
+        udd.setUserID(this.UserID);
         udd.setName(this.name);
         if(this.year != 0 || this.month != 0 || this.day != 0){
             Calendar birthday = Calendar.getInstance();

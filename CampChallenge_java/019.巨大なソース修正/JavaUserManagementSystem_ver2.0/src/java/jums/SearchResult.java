@@ -1,8 +1,12 @@
 package jums;
 
+import base.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -26,22 +30,40 @@ public class SearchResult extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         try{
+//            request.getRequestDispatcher("/searchresult.jsp").forward(request, response); 
             request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
-        
             //フォームからの入力を取得して、JavaBeansに格納
             UserDataBeans udb = new UserDataBeans();
             udb.setName(request.getParameter("name"));
             udb.setYear(request.getParameter("year"));
             udb.setType(request.getParameter("type"));
+            
+            String s ="";
 
+            if(udb.getName()=="" && udb.getYear()==0 && udb.getType()==0){
+               request.setAttribute("resultdata", s);
+              request.getRequestDispatcher("/searchresult.jsp").forward(request, response);
+            }
+            
+            
+            PreparedStatement st =null;
+           
+            
+//            if(udb.getName()=="" && udb.getYear()==0 && udb.getType()==0){
+//                String t = "a";
+//                request.setAttribute("resultData",udb);
+//               request.getRequestDispatcher("/searchresult.jsp").forward(request, response); 
+//            }
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO searchData = new UserDataDTO();
             udb.UD2DTOMapping(searchData);
-
+            
             UserDataDTO resultData = UserDataDAO .getInstance().search(searchData);
             request.setAttribute("resultData", resultData);
             
-            request.getRequestDispatcher("/searchresult.jsp").forward(request, response);  
+            request.getRequestDispatcher("/searchresult.jsp").forward(request, response); 
+            
+            
         }catch(Exception e){
             //何らかの理由で失敗したらエラーページにエラー文を渡して表示。想定は不正なアクセスとDBエラー
             request.setAttribute("error", e.getMessage());

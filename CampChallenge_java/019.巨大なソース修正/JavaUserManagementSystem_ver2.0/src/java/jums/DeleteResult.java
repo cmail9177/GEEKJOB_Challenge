@@ -1,11 +1,15 @@
 package jums;
 
+import base.DBManager;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.PreparedStatement;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Connection;
+import java.sql.ResultSet;
 
 /**
  *
@@ -26,7 +30,30 @@ public class DeleteResult extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
+       
+        Connection con = null;
+        PreparedStatement st = null;
+        
+        
         try {
+            
+            request.setCharacterEncoding("UTF-8");
+            
+            String t = request.getParameter("はい");
+            int n = Integer.parseInt(t);
+            
+            
+            String sql = "delete from user_t where userID ="+n+"";
+            String sql2 = "select * from user_t";
+            
+            con = DBManager.getConnection();
+            st = con.prepareStatement(sql);
+           
+            
+            st.execute();
+            
+//            request.setAttribute("resultDate",con);
+            request.getRequestDispatcher("/deleteresult.jsp").forward(request,response);
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
@@ -37,7 +64,13 @@ public class DeleteResult extends HttpServlet {
             out.println("<h1>Servlet DeleteResult at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
-        } finally {
+        }catch(Exception e){
+            
+            request.setAttribute("error", e.getMessage());
+            request.getRequestDispatcher("/error.jsp").forward(request, response);
+            
+            
+        }finally {
             out.close();
         }
     }

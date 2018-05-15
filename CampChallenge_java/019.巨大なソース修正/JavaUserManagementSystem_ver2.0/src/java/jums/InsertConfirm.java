@@ -41,6 +41,7 @@ public class InsertConfirm extends HttpServlet {
             
             //フォームからの入力を取得して、JavaBeansに格納
             UserDataBeans udb = new UserDataBeans();
+            udb.setUserID(request.getParameter("UserID"));
             udb.setName(request.getParameter("name"));
             udb.setYear(request.getParameter("year"));
             udb.setMonth(request.getParameter("month"));
@@ -54,6 +55,7 @@ public class InsertConfirm extends HttpServlet {
             System.out.println("Session updated!!");
             
             request.getRequestDispatcher("/insertconfirm.jsp").forward(request, response);
+            
         }catch(Exception e){
             request.setAttribute("error", e.getMessage());
             request.getRequestDispatcher("/error.jsp").forward(request, response);

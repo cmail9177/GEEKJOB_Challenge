@@ -29,6 +29,7 @@ public class InsertResult extends HttpServlet {
         
         //セッションスタート
         HttpSession session = request.getSession();
+        HttpSession hs =request.getSession();//追加 1
         
         try{
             request.setCharacterEncoding("UTF-8");//リクエストパラメータの文字コードをUTF-8に変更
@@ -39,17 +40,18 @@ public class InsertResult extends HttpServlet {
                 throw new Exception("不正なアクセスです");
             }
             
-            UserDataBeans udb = (UserDataBeans)session.getAttribute("udb");
+            UserDataBeans udb = (UserDataBeans)hs.getAttribute("udb");
             
             //DTOオブジェクトにマッピング。DB専用のパラメータに変換
             UserDataDTO userdata = new UserDataDTO();
             udb.UD2DTOMapping(userdata);
             
             //DBへデータの挿入
-            UserDataDAO .getInstance().insert(userdata);
+            UserDataDAO.getInstance().insert(userdata);
             
             //成功したのでセッションの値を削除
             session.invalidate();
+         
             
             //結果画面での表示用に入力パラメータ―をリクエストパラメータとして保持
             request.setAttribute("udb", udb);

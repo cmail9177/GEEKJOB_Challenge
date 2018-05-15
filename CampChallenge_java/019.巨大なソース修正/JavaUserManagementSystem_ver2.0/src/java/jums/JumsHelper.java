@@ -10,6 +10,8 @@ public class JumsHelper {
     
     //トップへのリンクを定数として設定
     private final String homeURL = "index.jsp";
+    private String kensakuURL = "search.jsp";
+    private String modoruURL = "javascript:history.go(-1)";
     
     public static JumsHelper getInstance(){
         return new JumsHelper();
@@ -17,8 +19,20 @@ public class JumsHelper {
     
     //トップへのリンクを返却
     public String home(){
-        return "<a href=\""+homeURL+"\">トップへ戻る</a>";
+        return "<a href=\""+homeURL+"\">トップへ戻る</a><br>";
     }
+    
+    public String kensaku(){
+        return "<a href=\""+kensakuURL+"\">検索画面へ戻る</a><br>";
+    }
+    
+    public String modoru(){
+        return "<a href=\""+modoruURL+"\">戻る</a><br>";
+    }
+    
+    
+    
+    
     
     /**
      * 入力されたデータのうち未入力項目がある場合、チェックリストにしたがいどの項目が
@@ -29,6 +43,9 @@ public class JumsHelper {
     public String chkinput(ArrayList<String> chkList){
         String output = "";
         for(String val : chkList){
+                if(val.equals("UserID")){
+                    output += "ユーザーID";
+                }
                 if(val.equals("name")){
                     output += "名前";
                 }
