@@ -19,6 +19,7 @@
     <body>
     <% if(chkList.size()==0){ %>
         <h1>登録確認</h1>
+        UserID:<%= udb.getUserID()%><br>
         名前:<%= udb.getName()%><br>
         生年月日:<%= udb.getYear()+"年"+udb.getMonth()+"月"+udb.getDay()+"日"%><br>
         種別:<%= jh.exTypenum(udb.getType())%><br>

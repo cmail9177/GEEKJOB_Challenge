@@ -9,6 +9,9 @@
     <body>
         エラーが発生しました。以下の項目を確認してください。<br>
         <%=request.getAttribute("error")%><br><br>
+        
+        <%= JumsHelper.getInstance().modoru()%>
+        
         <%=JumsHelper.getInstance().home()%>
     </body>
 </html>

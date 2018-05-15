@@ -21,6 +21,13 @@
     </head>
     <body>
     <form action="insertconfirm" method="POST">
+       
+        <h2>新規登録画面</h2><br>
+        
+        UserID:
+        <input type="text" name="UserID" value="<%if(reinput && udb.getUserID()!=0){out.print(udb.getUserID());}%>" >
+        <br><br>
+        
         名前:
         <input type="text" name="name" value="<% if(reinput){out.print(udb.getName());}%>">
         <br><br>
@@ -49,7 +56,7 @@
         種別:
         <br>
             <% for(int i = 1; i<=3; i++){ %>
-            <input type="radio" name="type" value="<%=i%>"<%if(reinput && udb.getType() == i){out.print("checked = \"checked\"");}%>><%=jh.exTypenum(i)%><br>
+            <input type="radio" name="type" value="<%=i%>"<%if(reinput && udb.getType() == i){ out.print("checked = \"checked\"");}%>><%=jh.exTypenum(i)%><br>
             <% } %>
         <br>
 
@@ -65,6 +72,6 @@
         <input type="submit" name="btnSubmit" value="確認画面へ">
     </form>
         <br>
-        <%=jh.home()%>
+   <%=jh.home()%><!--ホームへ戻る-->
     </body>
 </html>

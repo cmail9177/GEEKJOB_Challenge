@@ -21,11 +21,19 @@
     自己紹介:<%= udd.getComment()%><br>
     登録日時:<%= udd.getNewDate()%><br>
     
-    <form action="DeleteResult" method="POST">
-      <input type="submit" name="YES" value="はい"style="width:100px">
-    </form><br>
-    <form action="ResultDetail" method="POST">
-      <input type="submit" name="NO" value="詳細画面に戻る"style="width:100px">
+    <form action="DeleteResult" method="get">
+        <button type="submit" name="はい" value="<%= udd.getUserID()%>" style="width:100px">はい</button>
     </form>
+    
+    
+    <form action="ResultDetail" method="get">
+        <button type="submit" name="いいえ" value="<%= udd.getUserID()%>" style="width:100px">いいえ</button><br>
+    </form>
+     
+    <%=jh.syousai()%><br>
+    
+    <%=jh.home()%>
+    
     </body>
+   
 </html>

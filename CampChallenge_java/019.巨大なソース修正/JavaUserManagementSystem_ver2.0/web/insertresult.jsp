@@ -14,6 +14,7 @@
     </head>
     <body>
         <h1>登録結果</h1><br>
+        UserID:<%= udb.getUserID()%>
         名前:<%= udb.getName()%><br>
         生年月日:<%= udb.getYear()+"年"+udb.getMonth()+"月"+udb.getDay()+"日"%><br>
         種別:<%= jh.exTypenum(udb.getType())%><br>
