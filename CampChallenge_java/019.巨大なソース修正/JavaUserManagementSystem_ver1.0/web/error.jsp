@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page import="jums.JumsHelper"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -6,7 +7,10 @@
         <title>error</title>
     </head>
     <body>
-        エラーが発生しました。以下の項目を確認してください。<br>
-        <%=request.getAttribute("error")%>
+        エラーが発生しました。以下の項目を確認してください。<br><br>
+        ※<%=request.getAttribute("error")%>※<br><br>
+         
+        <a href="insert">登録画面に戻る</a><br><br>
+         <%=JumsHelper.getInstance().home()%>
     </body>
 </html>
